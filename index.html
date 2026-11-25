@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Classroom Resource Sharing Portal</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <!-- Navigation / Header -->
+  <header class="navbar">
+    <div class="logo">📚 Classroom Resource Portal</div>
+    <div class="mod-toggle">
+      <label for="modSwitch">🛡️ Moderator Mode:</label>
+      <input type="checkbox" id="modSwitch" onchange="renderResources()">
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="container">
+    
+    <!-- Left Sidebar: Upload Resource Form -->
+    <aside class="card form-section">
+      <h3>➕ Share a Resource</h3>
+      <form id="resourceForm" onsubmit="addResource(event)">
+        <label>Resource Title *</label>
+        <input type="text" id="title" placeholder="e.g., Unit 2 Flexbox Notes" required>
+
+        <label>Course Tag *</label>
+        <input type="text" id="courseTag" placeholder="e.g., CSE326, MTH101" required>
+
+        <label>Category *</label>
+        <select id="category" required>
+          <option value="Lecture Notes">Lecture Notes</option>
+          <option value="Question Papers">Question Papers</option>
+          <option value="Lab Manuals">Lab Manuals</option>
+          <option value="Reference Links">Reference Links</option>
+        </select>
+
+        <label>Resource URL / File Link *</label>
+        <input type="url" id="link" placeholder="https://drive.google.com/..." required>
+
+        <label>Metadata / Description *</label>
+        <textarea id="desc" rows="3" placeholder="File format, pages, topics covered..." required></textarea>
+
+        <button type="submit" class="btn-primary">Upload Resource</button>
+      </form>
+    </aside>
+
+    <!-- Right Content: Search, Filter & Resource Grid -->
+    <main class="content-section">
+      
+      <!-- Search and Filters Bar -->
+      <div class="card filter-bar">
+        <input type="text" id="searchInput" placeholder="🔍 Search by title or course tag (e.g., CSE326)..." oninput="renderResources()">
+        
+        <select id="categoryFilter" onchange="renderResources()">
+          <option value="All">All Categories</option>
+          <option value="Lecture Notes">Lecture Notes</option>
+          <option value="Question Papers">Question Papers</option>
+          <option value="Lab Manuals">Lab Manuals</option>
+          <option value="Reference Links">Reference Links</option>
+        </select>
+
+        <button id="bookmarkFilterBtn" class="btn-outline" onclick="toggleBookmarkFilter()">
+          🔖 Bookmarked Only
+        </button>
+      </div>
+
+      <!-- Quick Stats Bar -->
+      <div class="stats-bar" id="statsBar"></div>
+
+      <!-- Resource Cards Grid -->
+      <div id="resourceList" class="resource-grid"></div>
+    </main>
+
+  </div>
+
+  <!-- Metadata Preview Modal -->
+  <div id="previewModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal()">&times;</span>
+      <h3 id="modalTitle"></h3>
+      <p><strong>Course Tag:</strong> <span id="modalCourse"></span></p>
+      <p><strong>Category:</strong> <span id="modalCategory"></span></p>
+      <p><strong>Status:</strong> <span id="modalStatus"></span></p>
+      <p><strong>Downloads:</strong> <span id="modalDownloads"></span></p>
+      <p><strong>Rating:</strong> <span id="modalRating"></span> ⭐</p>
+      <p><strong>Metadata & Description:</strong></p>
+      <p id="modalDesc" class="desc-box"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
